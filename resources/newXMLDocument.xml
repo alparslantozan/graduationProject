@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<sourcemonitor_metrics>
+  <project version="3.5">
+    <project_name>erensahin</project_name>
+    <project_directory>C:\Users\alpar\Downloads\AI-Assignment-2</project_directory>
+    <project_language>C++</project_language>
+    <ignore_headers_footers>false</ignore_headers_footers>
+    <export_raw_numbers>false</export_raw_numbers>
+    <metric_names name_count="15">
+      <metric_name id="M0" type="number">Lines</metric_name>
+      <metric_name id="M1" type="number">Statements</metric_name>
+      <metric_name id="M2" type="percent" divisor="M1">Percent Branch Statements</metric_name>
+      <metric_name id="M3" type="percent" divisor="M0">Percent Lines with Comments</metric_name>
+      <metric_name id="M4" type="number">Classes Defined</metric_name>
+      <metric_name id="M5" type="ratio" divisor="M4">Methods Implemented per Class</metric_name>
+      <metric_name id="M6" type="ratio" divisor="M5">Average Statements per Method</metric_name>
+      <metric_name id="M7" type="string">Line Number of Most Complex Method</metric_name>
+      <metric_name id="M8" type="string">Name of Most Complex Method</metric_name>
+      <metric_name id="M9" type="maximum">Maximum Complexity</metric_name>
+      <metric_name id="M10" type="string">Line Number of Deepest Block</metric_name>
+      <metric_name id="M11" type="maximum">Maximum Block Depth</metric_name>
+      <metric_name id="M12" type="average" values="block_depths">Average Block Depth</metric_name>
+      <metric_name id="M13" type="average">Average Complexity</metric_name>
+      <metric_name id="M14" type="string">Functions</metric_name>
+    </metric_names>
+    <checkpoints checkpoint_count="1">
+      <checkpoint checkpoint_name="Baseline" checkpoint_date="2016-12-22" ignore_blank_lines="false" modified_complexity="true">
+        <files file_count="7">
+          <file file_name="Area.cpp">
+            <metrics metric_count="15">
+              <metric id="M0">35</metric>
+              <metric id="M1">14</metric>
+              <metric id="M2">7,1</metric>
+              <metric id="M3">0,0</metric>
+              <metric id="M4">0</metric>
+              <metric id="M5">6,00</metric>
+              <metric id="M6">1,2</metric>
+              <metric id="M7">27</metric>
+              <metric id="M8">Area::calculateCurrentSum()</metric>
+              <metric id="M9">2</metric>
+              <metric id="M10">31</metric>
+              <metric id="M11">2</metric>
+              <metric id="M12">0,57</metric>
+              <metric id="M13">1,17</metric>
+              <metric id="M14">0</metric>
+            </metrics>
+            <block_depths depth_count="10">
+              <block_depth level="0">7</block_depth>
+              <block_depth level="1">6</block_depth>
+              <block_depth level="2">1</block_depth>
+              <block_depth level="3">0</block_depth>
+              <block_depth level="4">0</block_depth>
+              <block_depth level="5">0</block_depth>
+              <block_depth level="6">0</block_depth>
+              <block_depth level="7">0</block_depth>
+              <block_depth level="8">0</block_depth>
+              <block_depth level="9+">0</block_depth>
+            </block_depths>
+          </file>
+          <file file_name="Area.h">
+            <metrics metric_count="15">
+              <metric id="M0">19</metric>
+              <metric id="M1">12</metric>
+              <metric id="M2">0,0</metric>
+              <metric id="M3">0,0</metric>
+              <metric id="M4">1</metric>
+              <metric id="M5">0,00</metric>
+              <metric id="M6">0,0</metric>
+              <metric id="M7"></metric>
+              <metric id="M8"></metric>
+              <metric id="M9">0</metric>
+              <metric id="M10">8</metric>
+              <metric id="M11">1</metric>
+              <metric id="M12">0,75</metric>
+              <metric id="M13">0,00</metric>
+              <metric id="M14">0</metric>
+            </metrics>
+            <block_depths depth_count="10">
+              <block_depth level="0">3</block_depth>
+              <block_depth level="1">9</block_depth>
+              <block_depth level="2">0</block_depth>
+              <block_depth level="3">0</block_depth>
+              <block_depth level="4">0</block_depth>
+              <block_depth level="5">0</block_depth>
+              <block_depth level="6">0</block_depth>
+              <block_depth level="7">0</block_depth>
+              <block_depth level="8">0</block_depth>
+              <block_depth level="9+">0</block_depth>
+            </block_depths>
+          </file>
+          <file file_name="Cell.cpp">
+            <metrics metric_count="15">
+              <metric id="M0">44</metric>
+              <metric id="M1">17</metric>
+              <metric id="M2">0,0</metric>
+              <metric id="M3">0,0</metric>
+              <metric id="M4">0</metric>
+              <metric id="M5">8,00</metric>
+              <metric id="M6">1,0</metric>
+              <metric id="M7">5</metric>
+              <metric id="M8">Cell::setValue()</metric>
+              <metric id="M9">1</metric>
+              <metric id="M10">7</metric>
+              <metric id="M11">1</metric>
+              <metric id="M12">0,47</metric>
+              <metric id="M13">1,00</metric>
+              <metric id="M14">0</metric>
+            </metrics>
+            <block_depths depth_count="10">
+              <block_depth level="0">9</block_depth>
+              <block_depth level="1">8</block_depth>
+              <block_depth level="2">0</block_depth>
+              <block_depth level="3">0</block_depth>
+              <block_depth level="4">0</block_depth>
+              <block_depth level="5">0</block_depth>
+              <block_depth level="6">0</block_depth>
+              <block_depth level="7">0</block_depth>
+              <block_depth level="8">0</block_depth>
+              <block_depth level="9+">0</block_depth>
+            </block_depths>
+          </file>
+          <file file_name="Cell.h">
+            <metrics metric_count="15">
+              <metric id="M0">24</metric>
+              <metric id="M1">16</metric>
+              <metric id="M2">0,0</metric>
+              <metric id="M3">0,0</metric>
+              <metric id="M4">1</metric>
+              <metric id="M5">0,00</metric>
+              <metric id="M6">0,0</metric>
+              <metric id="M7"></metric>
+              <metric id="M8"></metric>
+              <metric id="M9">0</metric>
+              <metric id="M10">8</metric>
+              <metric id="M11">1</metric>
+              <metric id="M12">0,81</metric>
+              <metric id="M13">0,00</metric>
+              <metric id="M14">0</metric>
+            </metrics>
+            <block_depths depth_count="10">
+              <block_depth level="0">3</block_depth>
+              <block_depth level="1">13</block_depth>
+              <block_depth level="2">0</block_depth>
+              <block_depth level="3">0</block_depth>
+              <block_depth level="4">0</block_depth>
+              <block_depth level="5">0</block_depth>
+              <block_depth level="6">0</block_depth>
+              <block_depth level="7">0</block_depth>
+              <block_depth level="8">0</block_depth>
+              <block_depth level="9+">0</block_depth>
+            </block_depths>
+          </file>
+          <file file_name="main.cpp">
+            <metrics metric_count="15">
+              <metric id="M0">11</metric>
+              <metric id="M1">8</metric>
+              <metric id="M2">0,0</metric>
+              <metric id="M3">0,0</metric>
+              <metric id="M4">0</metric>
+              <metric id="M5">0,00</metric>
+              <metric id="M6">0,0</metric>
+              <metric id="M7">3</metric>
+              <metric id="M8">main()</metric>
+              <metric id="M9">1</metric>
+              <metric id="M10">4</metric>
+              <metric id="M11">1</metric>
+              <metric id="M12">0,75</metric>
+              <metric id="M13">1,00</metric>
+              <metric id="M14">1</metric>
+            </metrics>
+            <block_depths depth_count="10">
+              <block_depth level="0">2</block_depth>
+              <block_depth level="1">6</block_depth>
+              <block_depth level="2">0</block_depth>
+              <block_depth level="3">0</block_depth>
+              <block_depth level="4">0</block_depth>
+              <block_depth level="5">0</block_depth>
+              <block_depth level="6">0</block_depth>
+              <block_depth level="7">0</block_depth>
+              <block_depth level="8">0</block_depth>
+              <block_depth level="9+">0</block_depth>
+            </block_depths>
+          </file>
+          <file file_name="Sudoku.cpp">
+            <metrics metric_count="15">
+              <metric id="M0">682</metric>
+              <metric id="M1">362</metric>
+              <metric id="M2">28,5</metric>
+              <metric id="M3">21,0</metric>
+              <metric id="M4">0</metric>
+              <metric id="M5">14,00</metric>
+              <metric id="M6">24,8</metric>
+              <metric id="M7">303</metric>
+              <metric id="M8">Sudoku::setAreaConstraints()</metric>
+              <metric id="M9">49</metric>
+              <metric id="M10">346</metric>
+              <metric id="M11">6</metric>
+              <metric id="M12">1,79</metric>
+              <metric id="M13">9,57</metric>
+              <metric id="M14">0</metric>
+            </metrics>
+            <block_depths depth_count="10">
+              <block_depth level="0">15</block_depth>
+              <block_depth level="1">211</block_depth>
+              <block_depth level="2">46</block_depth>
+              <block_depth level="3">42</block_depth>
+              <block_depth level="4">28</block_depth>
+              <block_depth level="5">14</block_depth>
+              <block_depth level="6">6</block_depth>
+              <block_depth level="7">0</block_depth>
+              <block_depth level="8">0</block_depth>
+              <block_depth level="9+">0</block_depth>
+            </block_depths>
+          </file>
+          <file file_name="Sudoku.h">
+            <metrics metric_count="15">
+              <metric id="M0">39</metric>
+              <metric id="M1">23</metric>
+              <metric id="M2">0,0</metric>
+              <metric id="M3">0,0</metric>
+              <metric id="M4">1</metric>
+              <metric id="M5">0,00</metric>
+              <metric id="M6">0,0</metric>
+              <metric id="M7"></metric>
+              <metric id="M8"></metric>
+              <metric id="M9">0</metric>
+              <metric id="M10">18</metric>
+              <metric id="M11">1</metric>
+              <metric id="M12">0,83</metric>
+              <metric id="M13">0,00</metric>
+              <metric id="M14">0</metric>
+            </metrics>
+            <block_depths depth_count="10">
+              <block_depth level="0">4</block_depth>
+              <block_depth level="1">19</block_depth>
+              <block_depth level="2">0</block_depth>
+              <block_depth level="3">0</block_depth>
+              <block_depth level="4">0</block_depth>
+              <block_depth level="5">0</block_depth>
+              <block_depth level="6">0</block_depth>
+              <block_depth level="7">0</block_depth>
+              <block_depth level="8">0</block_depth>
+              <block_depth level="9+">0</block_depth>
+            </block_depths>
+          </file>
+        </files>
+      </checkpoint>
+    </checkpoints>
+  </project>
+</sourcemonitor_metrics>
