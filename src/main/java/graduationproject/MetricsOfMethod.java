@@ -32,12 +32,12 @@ package main.java.graduationproject;
 public class MetricsOfMethod {
 
     private String className;
-    private MetricsForClassesDto metrics;
+    private MetricsForMethodsDto metrics;
 
     public MetricsOfMethod() {
     }
 
-    public MetricsOfMethod(String className, MetricsForClassesDto metrics) {
+    public MetricsOfMethod(String className, MetricsForMethodsDto metrics) {
         this.className = className;
         this.metrics = metrics;
     }
@@ -50,17 +50,17 @@ public class MetricsOfMethod {
         this.className = className;
     }
 
-    public MetricsForClassesDto getMetrics() {
+    public MetricsForMethodsDto getMetrics() {
         return metrics;
     }
 
-    public void setMetrics(MetricsForClassesDto metrics) {
+    public void setMetrics(MetricsForMethodsDto metrics) {
         this.metrics = metrics;
     }
 
     @Override
     public String toString() {
-        return "MetricsOfClass{" + "name=" + className + ", metrics=" + metrics.toString() + '}';
+        return "MetricsOfMethod{" + "name=" + className + ", metrics=" + metrics.toString() + '}';
     }
     
 }

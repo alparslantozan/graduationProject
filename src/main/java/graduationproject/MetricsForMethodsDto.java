@@ -67,5 +67,10 @@ public class MetricsForMethodsDto {
     public void setMAXNESTING(Integer MAXNESTING) {
         this.MAXNESTING = MAXNESTING;
     }
+
+    @Override
+    public String toString() {
+        return "MetricsForMethodsDto{" + "CINT=" + CINT + ", CDISP=" + CDISP + ", MAXNESTING=" + MAXNESTING + '}';
+    }
     
 }

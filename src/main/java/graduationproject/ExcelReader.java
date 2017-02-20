@@ -44,22 +44,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class ExcelReader {
 
-    private String excelFilePath;
-    private final Float floatZero = new Float(0);
-
-    public ExcelReader(String excelFilePath) {
-        this.excelFilePath = excelFilePath;
+    public ExcelReader() {
     }
 
-    public String getExcelFilePath() {
-        return excelFilePath;
-    }
-
-    public void setExcelFilePath(String excelFilePath) {
-        this.excelFilePath = excelFilePath;
-    }
-
-    public List<MetricsOfClass> listOfAllClassMetrics() throws IOException {
+    public List<MetricsOfClass> listOfAllClassMetrics(String excelFilePath) throws IOException {
         List<MetricsOfClass> projectClasses = new ArrayList<>();
         // Getting resource(File) from class loader  
         File configFile = new File(excelFilePath);
@@ -91,6 +79,18 @@ public class ExcelReader {
                         case 3:
                             aMetricSet.setTCC(new Float((double) getCellValue(nextCell)));
                             break;
+                        case 4:
+                            aMetricSet.setNAS((int) Math.round((double) getCellValue(nextCell)));
+                            break;
+                        case 5:
+                            aMetricSet.setPNAS(new Float((double) getCellValue(nextCell)));
+                            break;
+                        case 6:
+                            aMetricSet.setAMW(new Float((double) getCellValue(nextCell)));
+                            break;
+                        case 7:
+                            aMetricSet.setNOM((int) Math.round((double) getCellValue(nextCell)));
+                            break;
                     }
                 }
                 MetricsOfClass classMetric = new MetricsOfClass(name, aMetricSet);
@@ -101,9 +101,9 @@ public class ExcelReader {
 
         return projectClasses;
     }
-    
-    public List<MetricsOfMethod> listAllMethods() throws IOException{
-        List<MetricsOfClass> projectClasses = new ArrayList<>();
+
+    public List<MetricsOfMethod> listAllMethods(String excelFilePath) throws IOException {
+        List<MetricsOfMethod> projectMethods = new ArrayList<>();
         // Getting resource(File) from class loader  
         File configFile = new File(excelFilePath);
 
@@ -136,12 +136,12 @@ public class ExcelReader {
                             break;
                     }
                 }
-//                MetricsOfClass classMetric = new MetricsOfClass(name, aMetricSet);
-//                projectClasses.add(classMetric);
+                MetricsOfMethod methodMetric = new MetricsOfMethod(name, aMetricSet);
+                projectMethods.add(methodMetric);
             }
 
         }
-        return null;
+        return projectMethods;
     }
 
     private Object getCellValue(Cell cell) {

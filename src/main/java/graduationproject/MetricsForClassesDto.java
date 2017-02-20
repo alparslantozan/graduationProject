@@ -34,6 +34,10 @@ public class MetricsForClassesDto {
     private Integer ATFD;
     private Float TCC;
     private Float WMC;
+    private Integer NAS;
+    private Float PNAS;
+    private Float AMW;
+    private Integer NOM;
 
     public MetricsForClassesDto() {
     }
@@ -67,9 +71,42 @@ public class MetricsForClassesDto {
         this.WMC = WMC;
     }
 
+    public Integer getNAS() {
+        return NAS;
+    }
+
+    public void setNAS(Integer NAS) {
+        this.NAS = NAS;
+    }
+
+    public Float getPNAS() {
+        return PNAS;
+    }
+
+    public void setPNAS(Float PNAS) {
+        this.PNAS = PNAS;
+    }
+
+    public Float getAMW() {
+        return AMW;
+    }
+
+    public void setAMW(Float AMW) {
+        this.AMW = AMW;
+    }
+
+    public Integer getNOM() {
+        return NOM;
+    }
+
+    public void setNOM(Integer NOM) {
+        this.NOM = NOM;
+    }
+
     @Override
     public String toString() {
-        return "MetricsDto{" + "ATFD=" + ATFD + ", TCC=" + TCC + ", WMC=" + WMC + '}';
+        return "MetricsForClassesDto{" + "ATFD=" + ATFD + ", TCC=" + TCC + ", WMC=" + 
+                WMC + ", NAS=" + NAS + ", PNAS=" + PNAS + ", AMW=" + AMW + ", NOM=" + NOM + '}';
     }
 
 }

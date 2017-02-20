@@ -32,16 +32,42 @@ import java.util.List;
  * @author alparslantozan
  */
 public class MetricInterpreter {
-
+    
     public MetricInterpreter() {
     }
     
+    /**
+     *
+     * @param classList
+     */
     public void classMetricInterpreter(List<MetricsOfClass> classList){
-        classList.forEach((MetricsOfClass metricsOfClass) -> {
-            boolean check = determineGodClass(metricsOfClass);
-            if (check) {
-                printResult(metricsOfClass);
+        classList.forEach((metricsOfClass) -> {
+            printResult(metricsOfClass);
+            if (determineGodClass(metricsOfClass) && determineTraditionBreaker(metricsOfClass)) {
+                System.out.println("This class is both god class and tradition breaker");
             }
+            else if(determineGodClass(metricsOfClass))
+                System.out.println("This class is only god class");
+            else if(determineTraditionBreaker(metricsOfClass))
+                System.out.println("This class is only tradition breaker");
+            else
+                System.out.println("This class seems good");
+            System.out.println();
+            System.out.println();
+        });
+    }
+    
+    /**
+     *
+     * @param methodList
+     */
+    public void methodMetricInterpreter(List<MetricsOfMethod> methodList) {
+        methodList.forEach((metricsOfMethod) -> {
+            printResult(metricsOfMethod);
+            if(determineIntensiveCoupling(metricsOfMethod))
+                System.out.println("This method has intensive coupling");
+            System.out.println();
+            System.out.println();
         });
     }
     
@@ -49,7 +75,28 @@ public class MetricInterpreter {
         System.out.println(classMetric.toString());
     }
     
-    private boolean determineGodClass(MetricsOfClass classMetric){
-        return classMetric.getMetrics().getWMC() >= 50 && classMetric.getMetrics().getATFD() > 3 && classMetric.getMetrics().getTCC() < 0.33;
+    private void printResult(MetricsOfMethod methodMetric){
+        System.out.println(methodMetric.toString());
     }
+    
+    private boolean determineGodClass(MetricsOfClass classMetric){
+        return classMetric.getMetrics().getWMC() >= 47 && classMetric.getMetrics().getATFD() > 3 && classMetric.getMetrics().getTCC() < 0.33;
+    }
+    
+    private boolean determineIntensiveCoupling(MetricsOfMethod methodMetric) {
+        boolean firstControl = methodMetric.getMetrics().getCDISP()<0.5 && methodMetric.getMetrics().getCINT()>7;
+        boolean secondControl = methodMetric.getMetrics().getCDISP()<0.25 && methodMetric.getMetrics().getCINT()>3;
+        return methodMetric.getMetrics().getMAXNESTING()>1 && (firstControl || secondControl);
+    }
+    
+    private boolean determineTraditionBreaker(MetricsOfClass classMetric){
+        boolean excessiveIncrease = classMetric.getMetrics().getNAS() >= 7 
+                && classMetric.getMetrics().getPNAS() >= 2/3;
+        boolean childClassSubsential = (classMetric.getMetrics().getAMW() > 2 || classMetric.getMetrics().getWMC() >= 47) 
+                && classMetric.getMetrics().getNOM() >= 10;
+        boolean parentNotSmallOrDumb = classMetric.getMetrics().getAMW() > 2.0
+                && classMetric.getMetrics().getNOM() > 5 && classMetric.getMetrics().getWMC() >= 23.5;
+        return excessiveIncrease && childClassSubsential && parentNotSmallOrDumb;
+    }
+    
 }

@@ -41,10 +41,12 @@ public class GraduationProject {
      */
     public static void main(String[] args) {
         try {
-            ExcelReader excelReader = new ExcelReader("resources/metrics.xlsx");
+            ExcelReader excelReader = new ExcelReader();
             MetricInterpreter metricInterpreter = new MetricInterpreter();
-            List<MetricsOfClass> classMetrics = excelReader.listOfAllClassMetrics();
+            List<MetricsOfClass> classMetrics = excelReader.listOfAllClassMetrics("resources/metrics.xlsx");
             metricInterpreter.classMetricInterpreter(classMetrics);
+            List<MetricsOfMethod> methodMetrics = excelReader.listAllMethods("resources/methods.xlsx");
+            metricInterpreter.methodMetricInterpreter(methodMetrics);
         } catch (IOException ex) {
             Logger.getLogger(GraduationProject.class.getName()).log(Level.SEVERE, null, ex);
         }
