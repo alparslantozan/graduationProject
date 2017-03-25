@@ -25,6 +25,8 @@
  */
 package main.java.graduationproject;
 
+import javax.swing.text.*;
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -32,71 +34,121 @@ import java.util.List;
  * @author alparslantozan
  */
 public class MetricInterpreter {
-    
+
+    ValuesForRuleBasedSystem ruleValues;
+
     public MetricInterpreter() {
     }
-    
+
+    public MetricInterpreter(ValuesForRuleBasedSystem ruleValues) {
+        this.ruleValues = ruleValues;
+    }
+
     /**
      *
      * @param classList
      */
-    public void classMetricInterpreter(List<MetricsOfClass> classList){
-        classList.forEach((metricsOfClass) -> {
-            printResult(metricsOfClass);
-            if (determineGodClass(metricsOfClass) && determineTraditionBreaker(metricsOfClass)) {
-                System.out.println("This class is both god class and tradition breaker");
-            }
-            else if(determineGodClass(metricsOfClass))
-                System.out.println("This class is only god class");
-            else if(determineTraditionBreaker(metricsOfClass))
-                System.out.println("This class is only tradition breaker");
-            else
-                System.out.println("This class seems good");
-            System.out.println();
-            System.out.println();
-        });
+    public void classMetricInterpreter(List<MetricsOfClass> classList, javax.swing.JTextPane ruleBasedOutput){
+        StyleContext sc = StyleContext.getDefaultStyleContext();
+        StyledDocument doc = ruleBasedOutput.getStyledDocument();
+        AttributeSet attributeSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.BLACK);
+        attributeSet = sc.addAttribute(attributeSet, StyleConstants.FontFamily, "Lucida Console");
+        attributeSet = sc.addAttribute(attributeSet, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+        try {
+            doc.insertString(doc.getLength(),"Class Results\n",attributeSet);
+            doc.insertString(doc.getLength(),"====================\n",attributeSet);
+            classList.forEach((metricsOfClass) -> {
+                try {
+                    if (determineGodClass(metricsOfClass) && determineTraditionBreaker(metricsOfClass)) {
+                        AttributeSet attributeSet2 = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.RED);
+                        attributeSet2 = sc.addAttribute(attributeSet2, StyleConstants.FontFamily, "Lucida Console");
+                        attributeSet2 = sc.addAttribute(attributeSet2, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+                        doc.insertString(doc.getLength(),"Class " + metricsOfClass.getClassName()
+                                +" is both god class and tradition breaker\n",attributeSet2);
+                    }
+                    else if(determineGodClass(metricsOfClass)) {
+                        AttributeSet attributeSet3 = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.ORANGE);
+                        attributeSet3 = sc.addAttribute(attributeSet3, StyleConstants.FontFamily, "Lucida Console");
+                        attributeSet3 = sc.addAttribute(attributeSet3, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+                        doc.insertString(doc.getLength(),"Class " + metricsOfClass.getClassName() + " is god class\n",attributeSet3);
+                    } else if(determineTraditionBreaker(metricsOfClass)) {
+                        AttributeSet attributeSet4 = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.PINK);
+                        attributeSet4 = sc.addAttribute(attributeSet4, StyleConstants.FontFamily, "Lucida Console");
+                        attributeSet4 = sc.addAttribute(attributeSet4, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+                        doc.insertString(doc.getLength(),"Class " + metricsOfClass.getClassName() + " is only tradition breaker\n",attributeSet4);
+                    } else {
+                        AttributeSet attributeSet5 = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.GREEN);
+                        attributeSet5 = sc.addAttribute(attributeSet5, StyleConstants.FontFamily, "Lucida Console");
+                        attributeSet5 = sc.addAttribute(attributeSet5, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+                        doc.insertString(doc.getLength(),"Class " + metricsOfClass.getClassName() + " seems good\n",attributeSet5);
+                    }
+                } catch (BadLocationException e) {
+                    e.printStackTrace();
+                }
+            });
+            doc.insertString(doc.getLength(),"====================\n",attributeSet);
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
     }
-    
+
     /**
      *
      * @param methodList
      */
-    public void methodMetricInterpreter(List<MetricsOfMethod> methodList) {
-        methodList.forEach((metricsOfMethod) -> {
-            printResult(metricsOfMethod);
-            if(determineIntensiveCoupling(metricsOfMethod))
-                System.out.println("This method has intensive coupling");
-            System.out.println();
-            System.out.println();
-        });
+    public void methodMetricInterpreter(List<MetricsOfMethod> methodList, javax.swing.JTextPane ruleBasedOutput) {
+        StyleContext sc = StyleContext.getDefaultStyleContext();
+        StyledDocument doc = ruleBasedOutput.getStyledDocument();
+        AttributeSet attributeSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.BLACK);
+        attributeSet = sc.addAttribute(attributeSet, StyleConstants.FontFamily, "Lucida Console");
+        attributeSet = sc.addAttribute(attributeSet, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+        try {
+            doc.insertString(doc.getLength(),"Method Results\n",attributeSet);
+            doc.insertString(doc.getLength(),"====================\n",attributeSet);
+            methodList.forEach((metricsOfMethod) -> {
+                try {
+                    if(determineIntensiveCoupling(metricsOfMethod)) {
+                        AttributeSet attributeSet2 = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.RED);
+                        attributeSet2 = sc.addAttribute(attributeSet2, StyleConstants.FontFamily, "Lucida Console");
+                        attributeSet2 = sc.addAttribute(attributeSet2, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+                        doc.insertString(doc.getLength(),"Method " + metricsOfMethod.getClassName() + " has intensive coupling\n",attributeSet2);
+                    } else {
+                        AttributeSet attributeSet3 = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.GREEN);
+                        attributeSet3 = sc.addAttribute(attributeSet3, StyleConstants.FontFamily, "Lucida Console");
+                        attributeSet3 = sc.addAttribute(attributeSet3, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+                        doc.insertString(doc.getLength(),"Method " + metricsOfMethod.getClassName() + " seems good\n",attributeSet3);
+                    }
+                } catch (BadLocationException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            doc.insertString(doc.getLength(),"====================\n",attributeSet);
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
     }
-    
-    private void printResult(MetricsOfClass classMetric){
-        System.out.println(classMetric.toString());
-    }
-    
-    private void printResult(MetricsOfMethod methodMetric){
-        System.out.println(methodMetric.toString());
-    }
-    
+
     private boolean determineGodClass(MetricsOfClass classMetric){
-        return classMetric.getMetrics().getWMC() >= 47 && classMetric.getMetrics().getATFD() > 3 && classMetric.getMetrics().getTCC() < 0.33;
+        return classMetric.getMetrics().getWMC() >= ruleValues.getHighWMC() &&
+                classMetric.getMetrics().getATFD() > ruleValues.getATFD() &&
+                classMetric.getMetrics().getTCC() < ruleValues.getTCC();
     }
-    
+
     private boolean determineIntensiveCoupling(MetricsOfMethod methodMetric) {
-        boolean firstControl = methodMetric.getMetrics().getCDISP()<0.5 && methodMetric.getMetrics().getCINT()>7;
-        boolean secondControl = methodMetric.getMetrics().getCDISP()<0.25 && methodMetric.getMetrics().getCINT()>3;
-        return methodMetric.getMetrics().getMAXNESTING()>1 && (firstControl || secondControl);
+        boolean firstControl = methodMetric.getMetrics().getCDISP()< ruleValues.getHighCDISP() && methodMetric.getMetrics().getCINT()> ruleValues.getHighCINT();
+        boolean secondControl = methodMetric.getMetrics().getCDISP()<ruleValues.getLowCDISP()&& methodMetric.getMetrics().getCINT()>ruleValues.getLowCINT();
+        return methodMetric.getMetrics().getMAXNESTING()>ruleValues.getMAXNESTING() && (firstControl || secondControl);
     }
-    
+
     private boolean determineTraditionBreaker(MetricsOfClass classMetric){
-        boolean excessiveIncrease = classMetric.getMetrics().getNAS() >= 7 
-                && classMetric.getMetrics().getPNAS() >= 2/3;
-        boolean childClassSubsential = (classMetric.getMetrics().getAMW() > 2 || classMetric.getMetrics().getWMC() >= 47) 
-                && classMetric.getMetrics().getNOM() >= 10;
-        boolean parentNotSmallOrDumb = classMetric.getMetrics().getAMW() > 2.0
-                && classMetric.getMetrics().getNOM() > 5 && classMetric.getMetrics().getWMC() >= 23.5;
+        boolean excessiveIncrease = classMetric.getMetrics().getNAS() >= ruleValues.getNAS()
+                && classMetric.getMetrics().getPNAS() >= ruleValues.getPNAS();
+        boolean childClassSubsential = (classMetric.getMetrics().getAMW() > ruleValues.getAMW() || classMetric.getMetrics().getWMC() >= ruleValues.getHighWMC())
+                && classMetric.getMetrics().getNOM() >= ruleValues.getNOM();
+        boolean parentNotSmallOrDumb = classMetric.getMetrics().getAMW() > ruleValues.getAMW()
+                && classMetric.getMetrics().getNOM() > 5 && classMetric.getMetrics().getWMC() >= ruleValues.getLowWMC();
         return excessiveIncrease && childClassSubsential && parentNotSmallOrDumb;
     }
-    
+
 }
