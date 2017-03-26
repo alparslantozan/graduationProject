@@ -10,5 +10,8 @@
     <orderEntry type="library" name="poi-3.15" level="project" />
     <orderEntry type="library" name="poi-3" level="project" />
     <orderEntry type="library" name="commons-codec-1.10" level="project" />
+    <orderEntry type="library" name="weka" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="ooxml-lib" level="project" />
   </component>
 </module>
