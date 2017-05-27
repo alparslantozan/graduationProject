@@ -18,14 +18,20 @@
 
 package main.java.graduationproject;
 
-import weka.classifiers.Classifier;
+import weka.classifiers.functions.MultilayerPerceptron;
+import weka.classifiers.trees.RandomForest;
+import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.classifiers.trees.J48;
 import weka.classifiers.Evaluation;
+import weka.filters.Filter;
+import weka.filters.unsupervised.attribute.Add;
+import weka.filters.unsupervised.attribute.Remove;
 
 import javax.swing.text.*;
 import java.awt.*;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +40,7 @@ public class WekaDataReader {
     public WekaDataReader() {
     }
 
-    public void readArff(String trainSet, String testSet, javax.swing.JTextPane learningBasedOutput) {
+    public void neuralNetworkControl(String trainSet, String testSet, javax.swing.JTextPane learningBasedOutput) {
         StyleContext sc = StyleContext.getDefaultStyleContext();
         StyledDocument doc = learningBasedOutput.getStyledDocument();
         AttributeSet attributeSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.BLACK);
@@ -45,15 +51,111 @@ public class WekaDataReader {
             DataSource testDataSource = new DataSource(testSet);
             Instances trainSetData = trainDataSource.getDataSet();
             Instances testSetData = testDataSource.getDataSet();
+            trainSetData = filterDataSets(trainSetData);
+            testSetData = filterDataSets(testSetData);
+
             if (trainSetData.classIndex() == -1)
                 trainSetData.setClassIndex(trainSetData.numAttributes() - 1);
             if (testSetData.classIndex() == -1)
                 testSetData.setClassIndex(testSetData.numAttributes() - 1);
-            Classifier tree = new J48();
-            tree.buildClassifier(trainSetData);
+            MultilayerPerceptron mlp = new MultilayerPerceptron();
+            //Setting Parameters
+            mlp.setLearningRate(0.1);
+            mlp.setMomentum(0.2);
+            mlp.setTrainingTime(2000);
+            mlp.setHiddenLayers("3");
+            mlp.buildClassifier(trainSetData);
 
             Evaluation evaluation = new Evaluation(trainSetData);
-            evaluation.evaluateModel(tree, testSetData);
+            //evaluation.evaluateModel(mlp, testSetData);
+            evaluation.crossValidateModel(mlp, trainSetData, 10, new Random(10));
+            doc.insertString(doc.getLength(), "\nNetwork\n======\n", attributeSet);
+            attributeSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.BLUE);
+            doc.insertString(doc.getLength(), mlp.toString(), attributeSet);
+            attributeSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.BLACK);
+            doc.insertString(doc.getLength(), "\nResults\n======\n", attributeSet);
+            attributeSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.DARK_GRAY);
+            doc.insertString(doc.getLength(), evaluation.toSummaryString(false), attributeSet);
+            doc.insertString(doc.getLength(), evaluation.toMatrixString(), attributeSet);
+            doc.insertString(doc.getLength(), "\nRecall = " + String.valueOf( evaluation.recall(0)),attributeSet);
+            doc.insertString(doc.getLength(), "\n\nPrecision = " + String.valueOf(evaluation.precision(0)), attributeSet);
+        } catch (Exception e) {
+            Logger.getLogger(GraduationProject.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void randomForestControl(String trainSet, String testSet, javax.swing.JTextPane learningBasedOutput) {
+        StyleContext sc = StyleContext.getDefaultStyleContext();
+        StyledDocument doc = learningBasedOutput.getStyledDocument();
+        AttributeSet attributeSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.BLACK);
+        attributeSet = sc.addAttribute(attributeSet, StyleConstants.FontFamily, "Lucida Console");
+        attributeSet = sc.addAttribute(attributeSet, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+        try {
+            DataSource trainDataSource = new DataSource(trainSet);
+            DataSource testDataSource = new DataSource(testSet);
+            Instances trainSetData = trainDataSource.getDataSet();
+            Instances testSetData = testDataSource.getDataSet();
+            trainSetData = filterDataSets(trainSetData);
+            testSetData = filterDataSets(testSetData);
+
+            if (trainSetData.classIndex() == -1)
+                trainSetData.setClassIndex(trainSetData.numAttributes() - 1);
+            if (testSetData.classIndex() == -1)
+                testSetData.setClassIndex(testSetData.numAttributes() - 1);
+            RandomForest rf = new RandomForest();
+            rf.buildClassifier(trainSetData);
+
+            Evaluation evaluation = new Evaluation(trainSetData);
+            //evaluation.evaluateModel(mlp, testSetData);
+            evaluation.crossValidateModel(rf, trainSetData, 10, new Random(10));
+            doc.insertString(doc.getLength(), "\nForest\n======\n", attributeSet);
+            attributeSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.BLUE);
+            doc.insertString(doc.getLength(), rf.toString(), attributeSet);
+            attributeSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.BLACK);
+            doc.insertString(doc.getLength(), "\nResults\n======\n", attributeSet);
+            attributeSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.DARK_GRAY);
+            doc.insertString(doc.getLength(), evaluation.toSummaryString(false), attributeSet);
+            doc.insertString(doc.getLength(), evaluation.toMatrixString(), attributeSet);
+            doc.insertString(doc.getLength(), "\nRecall = " + String.valueOf( evaluation.recall(0)),attributeSet);
+            doc.insertString(doc.getLength(), "\n\nPrecision = " + String.valueOf(evaluation.precision(0)), attributeSet);
+        } catch (Exception e) {
+            Logger.getLogger(GraduationProject.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    //recall precission
+    public void decisionTreeControl(String trainSet, String testSet, javax.swing.JTextPane learningBasedOutput) {
+        StyleContext sc = StyleContext.getDefaultStyleContext();
+        StyledDocument doc = learningBasedOutput.getStyledDocument();
+        AttributeSet attributeSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.BLACK);
+        attributeSet = sc.addAttribute(attributeSet, StyleConstants.FontFamily, "Lucida Console");
+        attributeSet = sc.addAttribute(attributeSet, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+        try {
+            DataSource trainDataSource = new DataSource(trainSet);
+            DataSource testDataSource = new DataSource(testSet);
+            Instances trainSetData = trainDataSource.getDataSet();
+            Instances testSetData = testDataSource.getDataSet();
+            trainSetData = filterDataSets(trainSetData);
+            testSetData = filterDataSets(testSetData);
+
+            if (trainSetData.classIndex() == -1)
+                trainSetData.setClassIndex(trainSetData.numAttributes() - 1);
+            if (testSetData.classIndex() == -1)
+                testSetData.setClassIndex(testSetData.numAttributes() - 1);
+            J48 tree = new J48();
+            tree.setUnpruned(false);
+            tree.buildClassifier(trainSetData);
+            /*MultilayerPerceptron mlp = new MultilayerPerceptron();
+            //Setting Parameters
+            mlp.setLearningRate(0.1);
+            mlp.setMomentum(0.2);
+            mlp.setTrainingTime(2000);
+            mlp.setHiddenLayers("3");
+            mlp.buildClassifier(trainSetData);
+*/
+            Evaluation evaluation = new Evaluation(trainSetData);
+            //evaluation.evaluateModel(mlp, testSetData);
+            evaluation.crossValidateModel(tree, trainSetData, 10, new Random(10));
             doc.insertString(doc.getLength(), "\nTree\n======\n", attributeSet);
             attributeSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.BLUE);
             doc.insertString(doc.getLength(), tree.toString(), attributeSet);
@@ -61,8 +163,46 @@ public class WekaDataReader {
             doc.insertString(doc.getLength(), "\nResults\n======\n", attributeSet);
             attributeSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.DARK_GRAY);
             doc.insertString(doc.getLength(), evaluation.toSummaryString(false), attributeSet);
+            doc.insertString(doc.getLength(), evaluation.toMatrixString(), attributeSet);
+            doc.insertString(doc.getLength(), "\nRecall = " + String.valueOf( evaluation.recall(0)),attributeSet);
+            doc.insertString(doc.getLength(), "\n\nPrecision = " + String.valueOf(evaluation.precision(0)), attributeSet);
         } catch (Exception e) {
             Logger.getLogger(GraduationProject.class.getName()).log(Level.SEVERE, null, e);
         }
+    }
+
+    private Instances filterDataSets(Instances instances)throws Exception{
+        Add filter = new Add();
+        Integer a = instances.numAttributes() - 2;
+        filter.setAttributeIndex(a.toString());
+        filter.setAttributeName("BF/Rev");
+        filter.setInputFormat(instances);
+        instances = Filter.useFilter(instances,filter);
+        for (int i = instances.numInstances() - 1; i >= 0; i--) {
+            Instance inst = instances.get(i);
+            if(inst.value(instances.attribute("REVISONS")) <= 2)
+                instances.delete(i);
+            else{
+                double b =inst.value(instances.attribute("BUGFIXES"))/inst.value(instances.attribute("REVISONS"));
+                instances.instance(i).setValue(a-1,b);
+            }
+        }
+        for (int i = instances.numInstances() - 1; i >= 0; i--) {
+            Instance inst = instances.get(i);
+            if(inst.value(instances.attribute("BF/Rev")) > 0.41)
+                instances.instance(i).setValue(instances.attribute("class"), "buggy");
+            else
+                instances.instance(i).setValue(instances.attribute("class"), "clean");
+        }
+        //3,25,111
+        int[] options =new int[3];
+        options[0] = 3;
+        options[1] = 25;
+        options[2] = 111;
+        Remove remove = new Remove();
+        remove.setAttributeIndicesArray(options);
+        remove.setInputFormat(instances);
+        instances = Filter.useFilter(instances, remove);
+        return instances;
     }
 }

@@ -69,12 +69,12 @@ public class MetricInterpreter {
                         attributeSet4 = sc.addAttribute(attributeSet4, StyleConstants.FontFamily, "Lucida Console");
                         attributeSet4 = sc.addAttribute(attributeSet4, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
                         doc.insertString(doc.getLength(),"Class " + metricsOfClass.getClassName() + " is only tradition breaker\n",attributeSet4);
-                    } else {
+                    } /*else {
                         AttributeSet attributeSet5 = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.GREEN);
                         attributeSet5 = sc.addAttribute(attributeSet5, StyleConstants.FontFamily, "Lucida Console");
                         attributeSet5 = sc.addAttribute(attributeSet5, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
                         doc.insertString(doc.getLength(),"Class " + metricsOfClass.getClassName() + " seems good\n",attributeSet5);
-                    }
+                    }*/
                 } catch (BadLocationException e) {
                     e.printStackTrace();
                 }
@@ -105,12 +105,12 @@ public class MetricInterpreter {
                         attributeSet2 = sc.addAttribute(attributeSet2, StyleConstants.FontFamily, "Lucida Console");
                         attributeSet2 = sc.addAttribute(attributeSet2, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
                         doc.insertString(doc.getLength(),"Method " + metricsOfMethod.getClassName() + " has intensive coupling\n",attributeSet2);
-                    } else {
+                    } /*else {
                         AttributeSet attributeSet3 = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.GREEN);
                         attributeSet3 = sc.addAttribute(attributeSet3, StyleConstants.FontFamily, "Lucida Console");
                         attributeSet3 = sc.addAttribute(attributeSet3, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
                         doc.insertString(doc.getLength(),"Method " + metricsOfMethod.getClassName() + " seems good\n",attributeSet3);
-                    }
+                    }*/
                 } catch (BadLocationException e) {
                     e.printStackTrace();
                 }
