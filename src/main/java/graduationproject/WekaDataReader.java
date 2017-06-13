@@ -51,8 +51,8 @@ public class WekaDataReader {
             DataSource testDataSource = new DataSource(testSet);
             Instances trainSetData = trainDataSource.getDataSet();
             Instances testSetData = testDataSource.getDataSet();
-            trainSetData = filterDataSets(trainSetData);
-            testSetData = filterDataSets(testSetData);
+            trainSetData = filterDatasets(trainSetData);
+            testSetData = filterDatasets(testSetData);
 
             if (trainSetData.classIndex() == -1)
                 trainSetData.setClassIndex(trainSetData.numAttributes() - 1);
@@ -95,8 +95,8 @@ public class WekaDataReader {
             DataSource testDataSource = new DataSource(testSet);
             Instances trainSetData = trainDataSource.getDataSet();
             Instances testSetData = testDataSource.getDataSet();
-            trainSetData = filterDataSets(trainSetData);
-            testSetData = filterDataSets(testSetData);
+            trainSetData = filterDatasets(trainSetData);
+            testSetData = filterDatasets(testSetData);
 
             if (trainSetData.classIndex() == -1)
                 trainSetData.setClassIndex(trainSetData.numAttributes() - 1);
@@ -106,7 +106,7 @@ public class WekaDataReader {
             rf.buildClassifier(trainSetData);
 
             Evaluation evaluation = new Evaluation(trainSetData);
-            //evaluation.evaluateModel(mlp, testSetData);
+            //evaluation.evaluateModel(rf, testSetData);
             evaluation.crossValidateModel(rf, trainSetData, 10, new Random(10));
             doc.insertString(doc.getLength(), "\nForest\n======\n", attributeSet);
             attributeSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.BLUE);
@@ -135,8 +135,8 @@ public class WekaDataReader {
             DataSource testDataSource = new DataSource(testSet);
             Instances trainSetData = trainDataSource.getDataSet();
             Instances testSetData = testDataSource.getDataSet();
-            trainSetData = filterDataSets(trainSetData);
-            testSetData = filterDataSets(testSetData);
+            trainSetData = filterDatasets(trainSetData);
+            testSetData = filterDatasets(testSetData);
 
             if (trainSetData.classIndex() == -1)
                 trainSetData.setClassIndex(trainSetData.numAttributes() - 1);
@@ -145,16 +145,9 @@ public class WekaDataReader {
             J48 tree = new J48();
             tree.setUnpruned(false);
             tree.buildClassifier(trainSetData);
-            /*MultilayerPerceptron mlp = new MultilayerPerceptron();
-            //Setting Parameters
-            mlp.setLearningRate(0.1);
-            mlp.setMomentum(0.2);
-            mlp.setTrainingTime(2000);
-            mlp.setHiddenLayers("3");
-            mlp.buildClassifier(trainSetData);
-*/
+
             Evaluation evaluation = new Evaluation(trainSetData);
-            //evaluation.evaluateModel(mlp, testSetData);
+            //evaluation.evaluateModel(tree, testSetData);
             evaluation.crossValidateModel(tree, trainSetData, 10, new Random(10));
             doc.insertString(doc.getLength(), "\nTree\n======\n", attributeSet);
             attributeSet = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.BLUE);
@@ -171,7 +164,7 @@ public class WekaDataReader {
         }
     }
 
-    private Instances filterDataSets(Instances instances)throws Exception{
+    private Instances filterDatasets(Instances instances)throws Exception{
         Add filter = new Add();
         Integer a = instances.numAttributes() - 2;
         filter.setAttributeIndex(a.toString());
@@ -180,7 +173,7 @@ public class WekaDataReader {
         instances = Filter.useFilter(instances,filter);
         for (int i = instances.numInstances() - 1; i >= 0; i--) {
             Instance inst = instances.get(i);
-            if(inst.value(instances.attribute("REVISONS")) <= 2)
+            if(inst.value(instances.attribute("REVISONS")) <= 5)
                 instances.delete(i);
             else{
                 double b =inst.value(instances.attribute("BUGFIXES"))/inst.value(instances.attribute("REVISONS"));
@@ -189,7 +182,7 @@ public class WekaDataReader {
         }
         for (int i = instances.numInstances() - 1; i >= 0; i--) {
             Instance inst = instances.get(i);
-            if(inst.value(instances.attribute("BF/Rev")) > 0.41)
+            if(inst.value(instances.attribute("BF/Rev")) > 0.60)
                 instances.instance(i).setValue(instances.attribute("class"), "buggy");
             else
                 instances.instance(i).setValue(instances.attribute("class"), "clean");

@@ -18,11 +18,6 @@
 
 package main.java.graduationproject;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author alparslantozan
@@ -35,15 +30,5 @@ public class GraduationProject {
     public static void main(String[] args) {
         GraduationProjectGUI gui = new GraduationProjectGUI();
         gui.setVisible(true);
-//        try {
-//            ExcelReader excelReader = new ExcelReader();
-//            MetricInterpreter metricInterpreter = new MetricInterpreter();
-//            List<MetricsOfClass> classMetrics = excelReader.listOfAllClassMetrics("resources/metrics.xlsx");
-//            metricInterpreter.classMetricInterpreter(classMetrics);
-//            List<MetricsOfMethod> methodMetrics = excelReader.listAllMethods("resources/methods.xlsx");
-//            metricInterpreter.methodMetricInterpreter(methodMetrics);
-//        } catch (IOException ex) {
-//            Logger.getLogger(GraduationProject.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
 }

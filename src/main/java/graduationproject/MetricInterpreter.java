@@ -68,7 +68,7 @@ public class MetricInterpreter {
                         AttributeSet attributeSet4 = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.PINK);
                         attributeSet4 = sc.addAttribute(attributeSet4, StyleConstants.FontFamily, "Lucida Console");
                         attributeSet4 = sc.addAttribute(attributeSet4, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
-                        doc.insertString(doc.getLength(),"Class " + metricsOfClass.getClassName() + " is only tradition breaker\n",attributeSet4);
+                        doc.insertString(doc.getLength(),"Class " + metricsOfClass.getClassName() + " is tradition breaker\n",attributeSet4);
                     } /*else {
                         AttributeSet attributeSet5 = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.GREEN);
                         attributeSet5 = sc.addAttribute(attributeSet5, StyleConstants.FontFamily, "Lucida Console");
@@ -137,11 +137,12 @@ public class MetricInterpreter {
     private boolean determineTraditionBreaker(MetricsOfClass classMetric){
         boolean excessiveIncrease = classMetric.getMetrics().getNAS() >= ruleValues.getNAS()
                 && classMetric.getMetrics().getPNAS() >= ruleValues.getPNAS();
-        boolean childClassSubsential = (classMetric.getMetrics().getAMW() > ruleValues.getAMW() || classMetric.getMetrics().getWMC() >= ruleValues.getHighWMC())
+        boolean childClassSubstantial = (classMetric.getMetrics().getAMW() > ruleValues.getAMW()
+                || classMetric.getMetrics().getWMC() >= ruleValues.getHighWMC())
                 && classMetric.getMetrics().getNOM() >= ruleValues.getNOM();
         boolean parentNotSmallOrDumb = classMetric.getMetrics().getAMW() > ruleValues.getAMW()
                 && classMetric.getMetrics().getNOM() > 5 && classMetric.getMetrics().getWMC() >= ruleValues.getLowWMC();
-        return excessiveIncrease && childClassSubsential && parentNotSmallOrDumb;
+        return excessiveIncrease && childClassSubstantial && parentNotSmallOrDumb;
     }
 
 }
